@@ -4,3 +4,94 @@ body,
 html {
   margin: 0;
 }
+
+navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Bungee', sans-serif;
+  background-color: black;
+  background-image: url(http://www.transparenttextures.com/patterns/black-mamba.png);
+  color: #FFFFFF;
+  font-size: 30px;
+  width: 100%;
+  padding: .5em;
+  position: fixed;
+  top: 0;
+  z-index: 999;
+}
+
+#logo {
+  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  margin-left: 20px;
+}
+
+.dropbtn {
+  margin-left: 20px;
+}
+.dropdown {
+  position: relative;
+  margin-left: 20px;
+  zoom: 80%;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 100px;
+  box-shadow: 0 4px 12px 0 rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 10px 12px;
+  font-size: 20px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  display: block;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+// the following is for events
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+form {
+  max-width: 400px;
+  margin: 20px auto;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+button {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
