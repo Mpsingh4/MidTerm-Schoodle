@@ -42,3 +42,11 @@ The following steps are only for _one_ of the group members to perform.
 - Node 10.x or above
 - NPM 5.x or above
 - PG 6.x
+
+User Stories:
+
+1) As a visitor, I want to be able to create an event by providing event title, description, name, and email in order to initiate an event scheduling process.
+2) As an organizer, I want to send a unique and secure URL to possible attendees via my preferred method of communication (email, Discord, Telegram, Slack etc.) so that they can access and respond to the event proposal.
+4) As an attendee, I want to visit the URL I receive to specify my name, email, and availability for each possible time slot so that the organizer can determine the best time for the event.
+5) As an attendee, I want the ability to modify my response (name, email, and availability) after submitting it, in case my availability changes.
+6) As an attendee, I want to be able to view all responses to the event.
