@@ -5,6 +5,7 @@ require('dotenv').config();
 const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
 const morgan = require('morgan');
+const ejs = require('ejs');
 
 const PORT = process.env.PORT || 8080;
 const app = express();
@@ -48,6 +49,22 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
+// app.use((req, res, next) => {
+//   res.status(404).render('something probably homepage with error message');
+// });
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Internal Server Error');
+});
+
+
+app.get('/create-event', (req, res) => {
+  res.render('create-event');
+});
+
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
+

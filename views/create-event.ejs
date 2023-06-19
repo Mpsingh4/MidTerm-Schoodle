@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Create Event</title>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css">
+  <link rel="stylesheet" href="/vendor/border-box.css">
+  <link rel="stylesheet" href="/styles/main.css">
+  <link rel="stylesheet" href="/styles/layout.css">
+  <link rel="stylesheet" href="/styles/createevent.css">
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+  <script src="/scripts/app.js" defer></script>
+</head>
+
+<body>
+  <navbar>
+    <span id="logo">schoodle &#x270F;</span>
+    <div class="calendar-logo">
+      <!-- <img src=" path to image here" alt="Calendar Logo"> -->
+    </div>
+    <div class="dropdown">
+      <button class="dropbtn">menu</button>
+      <div class="dropdown-content">
+        <a href="#">Option 1</a>
+        <a href="#">Option 2</a>
+        <a href="#">Option 3</a>
+      </div>
+    </div>
+  </navbar>
+
+  <h1>Create Your Event:</h1>
+  <form id="event-form">
+    <label for="event-title">Event Title:</label>
+    <input type="text" id="event-title" required>
+
+    <label for="event-description">Event Description:</label>
+    <textarea id="event-description" rows="4" required></textarea>
+
+    <label for="organizer-name">Your Name:</label>
+    <input type="text" id="organizer-name" required>
+
+    <label for="organizer-email">Your Email:</label>
+    <input type="email" id="organizer-email" required>
+
+    <label for="event-date">Select a Date:</label>
+    <input type="text" id="event-date" required>
+
+    <button type="submit" id="create-button">Create Event</button>
+  </form>
+
+  <script>
+    $(function() {
+      // Initialize the datepicker
+      $("#event-date").datepicker({
+        dateFormat: "yy-mm-dd",
+        minDate: 0,
+        maxDate: "+1Y"
+      });
+    });
+  </script>
+
+  <footer>
+    <p>&copy; 2023 Schoodle. All rights reserved.</p>
+  </footer>
+</body>
+
+</html>
