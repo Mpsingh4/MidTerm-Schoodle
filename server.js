@@ -6,9 +6,19 @@ const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
 const morgan = require('morgan');
 const ejs = require('ejs');
+const { Pool } = require('pg');
 
 const PORT = process.env.PORT || 8080;
 const app = express();
+const router = express.Router();
+const { v4: uuidv4 } = require('uuid');
+const sqlite3 = require('sqlite3').verbose();
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
 
 app.set('view engine', 'ejs');
 
@@ -32,6 +42,7 @@ app.use(express.static('public'));
 const userApiRoutes = require('./routes/users-api');
 const widgetApiRoutes = require('./routes/widgets-api');
 const usersRoutes = require('./routes/users');
+const eventRoutes = require('./routes/events');
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -39,6 +50,7 @@ const usersRoutes = require('./routes/users');
 app.use('/api/users', userApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
+app.use('/events', eventRoutes);
 // Note: mount other resources here, using the same pattern above
 
 // Home page
@@ -49,22 +61,52 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-// app.use((req, res, next) => {
-//   res.status(404).render('something probably homepage with error message');
-// });
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Internal Server Error');
 });
 
+app.listen(PORT, () => {
+  console.log(`Example app listening on port ${PORT}`);
+});
 
 app.get('/create-event', (req, res) => {
   res.render('create-event');
 });
 
+app.get('/eventURL/:id', (req, res) => {
+  const eventId = req.params.id;
+  pool.query('SELECT * FROM events WHERE uniqueURL = $1', [eventId], (error, result) => {
+    if (error) {
+      console.error('Error retrieving event details:', error);
+      res.status(500).send('Error retrieving event details');
+    } else {
+      const event = result.rows[0];
+      if (event) {
+        res.render('eventURL', { event });
+      } else {
+        res.status(404).send('Event not found');
+      }
+    }
+  });
+});
 
-app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`);
+
+app.post('/create-event', (req, res) => {
+  const { eventTitle, eventDescription, organizerName, organizerEmail } = req.body;
+  const uniqueURL = generateUniqueURL();
+  pool.query(
+    'INSERT INTO events (eventTitle, eventDescription, organizerName, organizerEmail, uniqueURL) VALUES ($1, $2, $3, $4, $5)',
+    [eventTitle, eventDescription, organizerName, organizerEmail, uniqueURL],
+    (error, result) => {
+      if (error) {
+        console.error('Error storing event:', error);
+        res.status(500).send('Error storing event');
+      } else {
+        res.redirect(`/eventURL/${uniqueURL}`);
+      }
+    }
+  );
 });
 

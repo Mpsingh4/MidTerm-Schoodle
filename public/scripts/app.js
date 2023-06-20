@@ -25,3 +25,15 @@ document.getElementById('event-form').addEventListener('submit', function(event)
   // Do something with the event object (e.g., send it to the server)
   console.log(event);
 });
+
+
+// Generate a random alphanumeric string
+function generateRandomString(length) {
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}

@@ -19,6 +19,7 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
   <script src="/scripts/app.js" defer></script>
+
 </head>
 
 <body>
@@ -56,10 +57,43 @@
 
     <button type="submit" id="create-button">Create Event</button>
   </form>
+  <script>
+    $(function() {
+      $("#event-form").submit(function(event) {
+        event.preventDefault();
+
+        var eventTitle = $("#event-title").val();
+        var eventDescription = $("#event-description").val();
+        var organizerName = $("#organizer-name").val();
+        var organizerEmail = $("#organizer-email").val();
+        var eventDate = $("#event-date").val();
+
+        var eventData = {
+          eventTitle: eventTitle,
+          eventDescription: eventDescription,
+          organizerName: organizerName,
+          organizerEmail: organizerEmail,
+          eventDate: eventDate
+        };
+
+        $.ajax({
+          url: "/create-event",
+          method: "POST",
+          data: eventData,
+          success: function(response) {
+            var uniqueURL = response.uniqueURL;
+            window.location.href = "/eventURL/" + uniqueURL;
+          },
+          error: function(error) {
+            console.log("Error:", error);
+          }
+        });
+      });
+    });
+  </script>
 
   <script>
     $(function() {
-      // Initialize the datepicker
       $("#event-date").datepicker({
         dateFormat: "yy-mm-dd",
         minDate: 0,
