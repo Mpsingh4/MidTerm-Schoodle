@@ -28,7 +28,7 @@ document.getElementById('event-form').addEventListener('submit', function(event)
 
 
 // Generate a random alphanumeric string
-function generateRandomString(length) {
+function generateUniqueURL(length) {
   let result = '';
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   const charactersLength = characters.length;
@@ -37,3 +37,4 @@ function generateRandomString(length) {
   }
   return result;
 }
+

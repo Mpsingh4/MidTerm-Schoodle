@@ -20,6 +20,8 @@ const pool = new Pool({
   }
 });
 
+const {generateUniqueURL} = require('./helpers');
+
 app.set('view engine', 'ejs');
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
@@ -50,7 +52,7 @@ const eventRoutes = require('./routes/events');
 app.use('/api/users', userApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
-app.use('/events', eventRoutes);
+// app.use('/events', eventRoutes); -----xx---
 // Note: mount other resources here, using the same pattern above
 
 // Home page
@@ -75,38 +77,35 @@ app.get('/create-event', (req, res) => {
   res.render('create-event');
 });
 
+app.post('/create-event', (req, res) => {
+  const { eventTitle, eventDescription, organizerName, organizerEmail, eventDate } = req.body;
+  const uniqueURL = generateUniqueURL(5);
+  // Store the event details in a database
+  // For simplicity loging the event data here
+  console.log('Event Data:', {
+    eventTitle,
+    eventDescription,
+    organizerName,
+    organizerEmail,
+    eventDate,
+    uniqueURL,
+  });
+
+  res.send({ uniqueURL });
+});
+
 app.get('/eventURL/:id', (req, res) => {
   const eventId = req.params.id;
-  pool.query('SELECT * FROM events WHERE uniqueURL = $1', [eventId], (error, result) => {
-    if (error) {
-      console.error('Error retrieving event details:', error);
-      res.status(500).send('Error retrieving event details');
-    } else {
-      const event = result.rows[0];
-      if (event) {
-        res.render('eventURL', { event });
-      } else {
-        res.status(404).send('Event not found');
-      }
-    }
-  });
+  const event = {
+    eventTitle: 'Sample Event Title',
+    eventDescription: 'Sample Event Description',
+    organizerName: 'Sample Organizer Name',
+    organizerEmail: 'sample@example.com',
+    eventDate: '2023-06-15',
+    uniqueURL: eventId,
+  };
+
+  res.render('eventURL', { event });
 });
 
-
-app.post('/create-event', (req, res) => {
-  const { eventTitle, eventDescription, organizerName, organizerEmail } = req.body;
-  const uniqueURL = generateUniqueURL();
-  pool.query(
-    'INSERT INTO events (eventTitle, eventDescription, organizerName, organizerEmail, uniqueURL) VALUES ($1, $2, $3, $4, $5)',
-    [eventTitle, eventDescription, organizerName, organizerEmail, uniqueURL],
-    (error, result) => {
-      if (error) {
-        console.error('Error storing event:', error);
-        res.status(500).send('Error storing event');
-      } else {
-        res.redirect(`/eventURL/${uniqueURL}`);
-      }
-    }
-  );
-});
 
