@@ -14,11 +14,13 @@ const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
 const sqlite3 = require('sqlite3').verbose();
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: 'postgres://labber:labber@localhost:5432/schoodle_db',
   ssl: {
     rejectUnauthorized: false
   }
 });
+
+
 
 const {generateUniqueURL} = require('./helpers');
 
@@ -83,9 +85,18 @@ app.post('/create-event', (req, res) => {
   const { eventTitle, eventDescription, organizerName, organizerEmail, eventDate } = req.body;
   const uniqueURL = generateUniqueURL(5);
 
+  console.log('Inserting event:', {
+    eventTitle,
+    eventDescription,
+    organizerName,
+    organizerEmail,
+    eventDate,
+    uniqueURL,
+  });
+
   pool.query(
-    'INSERT INTO events (eventTitle, eventDescription, organizerName, organizerEmail, uniqueURL) VALUES ($1, $2, $3, $4, $5)',
-    [eventTitle, eventDescription, organizerName, organizerEmail, uniqueURL],
+    'INSERT INTO events (eventTitle, eventDescription, organizerName, organizerEmail, eventDate, uniqueURL) VALUES ($1, $2, $3, $4, $5, $6)',
+    [eventTitle, eventDescription, organizerName, organizerEmail, eventDate, uniqueURL],
     (error, result) => {
       if (error) {
         console.error('Error storing event:', error);
