@@ -102,7 +102,7 @@ app.post('/create-event', (req, res) => {
         console.error('Error storing event:', error);
         res.status(500).send('Error storing event');
       } else {
-        res.redirect(`/eventURL/${uniqueURL}`);
+        res.json({uniqueURL});
       }
     }
   );
@@ -110,11 +110,14 @@ app.post('/create-event', (req, res) => {
 
 app.get('/eventURL/:id', (req, res) => {
   const eventId = req.params.id;
+  console.log('Retrieving event details for eventId:', eventId);
+
   pool.query('SELECT * FROM events WHERE uniqueURL = $1', [eventId], (error, result) => {
     if (error) {
       console.error('Error retrieving event details:', error);
       res.status(500).send('Error retrieving event details');
     } else {
+      console.log('Query result:', result.rows);
       const event = result.rows[0];
       if (event) {
         res.render('eventURL', { event });
@@ -124,5 +127,22 @@ app.get('/eventURL/:id', (req, res) => {
     }
   });
 });
+
+// app.get('/eventURL/:id', (req, res) => {
+//   const eventId = req.params.id;
+//   pool.query('SELECT * FROM events WHERE uniqueURL = $1', [eventId], (error, result) => {
+//     if (error) {
+//       console.error('Error retrieving event details:', error);
+//       res.status(500).send('Error retrieving event details');
+//     } else {
+//       const event = result.rows[0];
+//       if (event) {
+//         res.render('eventURL', { event });
+//       } else {
+//         res.status(404).send('Event not found');
+//       }
+//     }
+//   });
+// });
 
 // ...

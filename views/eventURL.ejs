@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,14 +36,23 @@
     </div>
   </navbar>
 
-  <body>
-    <h1>Event URL</h1>
-    <p>Your event URL: <%= event.uniqueURL %></p>
-    <p>Event Title: <%= event.eventTitle %></p>
-    <p>Event Description: <%= event.eventDescription %></p>
-    <p>Organizer Name: <%= event.organizerName %></p>
-    <p>Organizer Email: <%= event.organizerEmail %></p>
-  </body>
+  <h1>Event URL</h1>
+  <p>Your event URL: <%= event.uniqueurl %></p>
+  <p>Event Title: <%= event.eventtitle %></p>
+  <p>Event Description: <%= event.eventdescription %></p>
+  <p>Organizer Name: <%= event.organizername %></p>
+  <p>Organizer Email: <%= event.organizeremail %></p>
+  <p>Date of Event: <%= event.eventdate %></p>
+
+  <button id="rsvp-button">RSVP</button>
+
+  <script>
+    $(function() {
+      $('#rsvp-button').click(function() {
+        window.location.href = '/rsvp?eventid=<%= event.uniqueurl %>';
+      });
+    });
+  </script>
 
 
   <footer>

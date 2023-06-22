@@ -82,6 +82,7 @@
           data: eventData,
           success: function(response) {
             var uniqueURL = response.uniqueURL;
+            console.log("logging response", response); //
             window.location.href = "/eventURL/" + uniqueURL;
           },
           error: function(error) {
