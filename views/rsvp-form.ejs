@@ -34,7 +34,7 @@
 
 <body>
   <h1>RSVP Form</h1>
-  <form id="rsvp-form" action="/submit-rsvp" method="POST">
+  <form id="rsvp-form" action="/rsvp" method="POST">
     <input type="hidden" name="eventId" value="<%= eventId %>">
     <label for="name">Name:</label>
     <input type="text" id="name" name="name" required>
@@ -51,6 +51,14 @@
 
     <button type="submit">Submit RSVP</button>
   </form>
+
+  <script>
+    document.getElementById("rsvp-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+      //for any ajax i'll need here.
+      this.submit();
+    });
+  </script>
 </body>
 
   <footer>

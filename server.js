@@ -143,6 +143,18 @@ app.post('/rsvp', (req, res) => {
   if (!eventId || !name || !email || !availability) {
     return res.status(400).send('Invalid data');
   }
-  res.redirect(`/eventURL/${eventId}`);
+
+  pool.query(
+    'INSERT INTO responses (eventId, name, email, availability) VALUES ($1, $2, $3, $4)',
+    [eventId, name, email, availability],
+    (error, result) => {
+      if (error) {
+        console.error('Error storing response:', error);
+        res.status(500).send('Error storing response');
+      } else {
+        res.redirect(`/eventURL/${eventId}`);
+      }
+    }
+  );
 });
 
