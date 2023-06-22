@@ -139,6 +139,7 @@ app.get('/rsvp', (req, res) => {
 });
 
 app.post('/rsvp', (req, res) => {
+  console.log('Received RSVP data:', req.body);
   const { eventId, name, email, availability } = req.body;
   if (!eventId || !name || !email || !availability) {
     return res.status(400).send('Invalid data');
@@ -152,9 +153,25 @@ app.post('/rsvp', (req, res) => {
         console.error('Error storing response:', error);
         res.status(500).send('Error storing response');
       } else {
-        res.redirect(`/eventURL/${eventId}`);
+        console.log('Response stored success:', result.rows);
+        res.json(`/eventURL/${eventId}`);
       }
     }
   );
 });
 
+app.get('/responses/:eventId', (req, res) => {
+  const eventId = req.params.eventId;
+  console.log('Retrieving responses for eventId:', eventId);
+
+  pool.query('SELECT name, availability FROM responses WHERE eventId = $1', [eventId], (error, result) => {
+    if (error) {
+      console.error('Error retrieving responses:', error);
+      res.status(500).json({ error: 'Error retrieving responses' });
+    } else {
+      console.log('Query result:', result.rows);
+      const responses = result.rows;
+      res.json(responses);
+    }
+  });
+});

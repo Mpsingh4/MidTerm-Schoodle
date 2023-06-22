@@ -47,7 +47,7 @@
       <option value="1:00 PM - 2:00 PM">1:00 PM - 2:00 PM</option>
       <option value="2:00 PM - 3:00 PM">2:00 PM - 3:00 PM</option>
       <option value="3:00 PM - 4:00 PM">3:00 PM - 4:00 PM</option>
-</select>
+    </select>
 
     <button type="submit">Submit RSVP</button>
   </form>
@@ -55,11 +55,51 @@
   <script>
     document.getElementById("rsvp-form").addEventListener("submit", function(event) {
       event.preventDefault();
-      //for any ajax i'll need here.
-      this.submit();
+      const eventId = document.querySelector('input[name="eventId"]').value;
+      const name = document.querySelector('input[name="name"]').value;
+      const email = document.querySelector('input[name="email"]').value;
+      const availability = document.querySelector('select[name="availability"]').value;
+
+      if (!eventId || !name || !email || !availability) {
+        alert('Please fill out all fields');
+        return;
+      }
+      // for any ajax i'll need go here ------------------------------
+      const formData = {
+        eventId: eventId,
+        name: name,
+        email: email,
+        availability: availability
+      };
+
+      console.log('form data:', formData);
+
+      $.ajax({
+        url: '/rsvp',
+        method: 'POST',
+        data: formData
+      })
+        .then(response => {
+          console.log('respose:', response);
+          if (response) {
+            return response;
+          } else {
+            throw new Error('Error submitting RSVP 1');
+          }
+        })
+        .then(data => {
+          // log response data
+          console.log('RSVP submitted:', data);
+          window.location.href = `/eventURL/${eventId}`;
+        })
+        .catch(error => {
+          console.error(error);
+          alert('Error submitting RSVP 2');
+        });
     });
   </script>
 </body>
+
 
   <footer>
     <p>&copy; 2023 Schoodle. All rights reserved.</p>

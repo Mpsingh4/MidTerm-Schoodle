@@ -46,6 +46,12 @@
 
   <button id="rsvp-button">RSVP</button>
 
+  <h2>Responses:</h2>
+  <ul id="responses-container"></ul>
+
+
+
+
   <script>
     $(function() {
       $('#rsvp-button').click(function() {
@@ -53,6 +59,29 @@
       });
     });
   </script>
+
+<script>
+  $(function() {
+    $('#rsvp-button').click(function() {
+      window.location.href = '/rsvp?eventid=<%= event.uniqueurl %>';
+    });
+
+    $.ajax({// inser and show responses
+      url: '/responses/<%= event.uniqueurl %>',
+      method: 'GET',
+      success: function(responses) { // Iterate each response, add 2 container
+        responses.forEach(function(response) {
+          var listItem = $('<li>').text(response.name + ' - ' + response.availability);
+          $('#responses-container').append(listItem);
+        });
+      },
+      error: function() {
+        console.log('Error retrieving responses');
+      }
+    });
+  });
+</script>
+
 
 
   <footer>
