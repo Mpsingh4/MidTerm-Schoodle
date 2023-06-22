@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title> RSVP Form</title>
+
+  <meta charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" />
+  <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="stylesheet" href="/styles/layout.css" />
+
+  <script src="/vendor/jquery-3.0.0.js"></script>
+  <script defer src="/scripts/app.js"></script>
+</head>
+
+<navbar>
+  <span id="logo">schoodle &#x270F;</span>
+  <div class="calendar-logo">
+    <!-- <img src=" path to image here" alt="Calendar Logo"> -->
+  </div>
+  <div class="dropdown">
+    <button class="dropbtn">menu</button>
+    <div class="dropdown-content">
+      <a href="#">Option 1</a>
+      <a href="#">Option 2</a>
+      <a href="#">Option 3</a>
+    </div>
+  </div>
+</navbar>
+
+<body>
+  <h1>RSVP Form</h1>
+  <form id="rsvp-form" action="/submit-rsvp" method="POST">
+    <input type="hidden" name="eventId" value="<%= eventId %>">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    <label for="availability">Availability:</label>
+    <select id="availability" name="availability">
+      <option value="">Select a time slot</option>
+      <option value="12:00 PM - 1:00 PM">12:00 PM - 1:00 PM</option>
+      <option value="1:00 PM - 2:00 PM">1:00 PM - 2:00 PM</option>
+      <option value="2:00 PM - 3:00 PM">2:00 PM - 3:00 PM</option>
+      <option value="3:00 PM - 4:00 PM">3:00 PM - 4:00 PM</option>
+</select>
+
+    <button type="submit">Submit RSVP</button>
+  </form>
+</body>
+
+  <footer>
+    <p>&copy; 2023 Schoodle. All rights reserved.</p>
+  </footer>
+</html>
+
+</html>

@@ -128,21 +128,18 @@ app.get('/eventURL/:id', (req, res) => {
   });
 });
 
-// app.get('/eventURL/:id', (req, res) => {
-//   const eventId = req.params.id;
-//   pool.query('SELECT * FROM events WHERE uniqueURL = $1', [eventId], (error, result) => {
-//     if (error) {
-//       console.error('Error retrieving event details:', error);
-//       res.status(500).send('Error retrieving event details');
-//     } else {
-//       const event = result.rows[0];
-//       if (event) {
-//         res.render('eventURL', { event });
-//       } else {
-//         res.status(404).send('Event not found');
-//       }
-//     }
-//   });
-// });
 
-// ...
+app.get('/rsvp', (req, res) => {
+  const eventId = req.query.eventid;
+  if (!eventId) {
+    return res.status(400).send('Invalid eventId');
+  }
+  // going to need to fetch event details; event id
+  res.render('rsvp-form', { eventId });
+});
+
+app.post('/submit-rsvp', (req, res) => {
+  const { eventId, name, email, availability } = req.body;
+  // insert RSVP form info to database
+  // redirect to success/confirmation page or back to eventURL to display participants there
+});
