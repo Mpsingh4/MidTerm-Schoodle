@@ -44,6 +44,12 @@
   <p>Organizer Email: <%= event.organizeremail %></p>
   <p>Date of Event: <%= event.eventdate %></p>
 
+<!-- I want to make this toggleable to view the responses -->
+  <h2>Response Details</h2>
+    <p>Attendee Name: <%= response.name %></p>
+    <p>Attendee Email: <%= response.email %></p>
+    <p>Availability: <%= response.availability %></p>
+
   <button id="rsvp-button">RSVP</button>
 
   <script>

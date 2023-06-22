@@ -138,8 +138,11 @@ app.get('/rsvp', (req, res) => {
   res.render('rsvp-form', { eventId });
 });
 
-app.post('/submit-rsvp', (req, res) => {
+app.post('/rsvp', (req, res) => {
   const { eventId, name, email, availability } = req.body;
-  // insert RSVP form info to database
-  // redirect to success/confirmation page or back to eventURL to display participants there
+  if (!eventId || !name || !email || !availability) {
+    return res.status(400).send('Invalid data');
+  }
+  res.redirect(`/eventURL/${eventId}`);
 });
+
