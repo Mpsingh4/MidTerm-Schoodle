@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="/vendor/border-box.css" />
   <link rel="stylesheet" href="/styles/main.css" />
   <link rel="stylesheet" href="/styles/layout.css" />
+  <link rel="stylesheet" href="/styles/eventURL.css">
 
   <script src="/vendor/jquery-3.0.0.js"></script>
   <script defer src="/scripts/app.js"></script>
@@ -20,14 +21,12 @@
 <navbar>
   <span id="logo">schoodle &#x270F;</span>
   <div class="calendar-logo">
-    <!-- <img src=" path to image here" alt="Calendar Logo"> -->
   </div>
   <div class="dropdown">
     <button class="dropbtn">menu</button>
     <div class="dropdown-content">
-      <a href="#">Option 1</a>
-      <a href="#">Option 2</a>
-      <a href="#">Option 3</a>
+      <a href="/">Home</a>
+      <a href="/create-event">Create Event</a>
     </div>
   </div>
 </navbar>
@@ -49,7 +48,7 @@
       <option value="3:00 PM - 4:00 PM">3:00 PM - 4:00 PM</option>
     </select>
 
-    <button type="submit">Submit RSVP</button>
+    <button id="button" type="submit">Submit RSVP</button>
   </form>
 
   <script>
@@ -101,7 +100,7 @@
 </body>
 
 
-  <footer>
+  <footer class="footer">
     <p>&copy; 2023 Schoodle. All rights reserved.</p>
   </footer>
 </html>
